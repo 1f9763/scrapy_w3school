@@ -1,9 +1,9 @@
 __author__ = '2200621'
 coding='utf-8'
 
-from scrapy.spider import Spider
+from scrapy.spiders import Spider
 from scrapy.selector import Selector
-from scrapy import log
+# from scrapy import log
 
 from w3school.items import W3SchoolItem
 
@@ -21,17 +21,24 @@ class W3schoolSpider(Spider):
 
         for site in sites:
             item=W3SchoolItem()
-            title=site.xpath('a/text()').extract()
-            link=site.xpath('a/@href').extract()
-            desc=site.xpath('a/@title').extract()
 
-            item['title']=[t.encode('utf-8') for t in title]
-            item['link']=[l.encode('utf-8') for l in link]
-            item['desc']=[d.encode('utf-8') for d in desc]
+            # title=site.xpath('a/text()').extract()
+            # link=site.xpath('a/@href').extract()
+            # desc=site.xpath('a/@title').extract()
+
+            item['title']=site.xpath('a/text()').extract()
+            item['link']=site.xpath('a/@href').extract()
+            item['desc']=site.xpath('a/@title').extract()
+
+            # print item['title']
+            # item['title']=[t.encode('utf-8') for t in title]
+            # # print item['title']
+            # item['link']=[l.encode('utf-8') for l in link]
+            # item['desc']=[d.encode('utf-8') for d in desc]
 
             items.append(item)
-
             # log.msg('Appending item...',level='INFO')
 
         # log.msg('Appending done',level='INFO')
+        # print items
         return items
